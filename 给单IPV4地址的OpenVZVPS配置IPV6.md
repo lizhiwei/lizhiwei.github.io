@@ -12,19 +12,18 @@ summary: 有些小型的OpenVZ VPS供应商不提供IPV6地址，可以用he.net
 
 
 ## OpenVZ类型的VPS 内核 不支持sit模块
-   所以必须用用一个用户空间的实现
-    
+   只好用一个用户空间的实现
 
 
 ## 编译  TunnelBroker Tun
 
-   git clone https://github.com/acgrid/tb-tun
-   cd tb-tun
-   make
+    git clone https://github.com/acgrid/tb-tun
+    cd tb-tun
+    make
 
-不过作者本来提供一个编译好的
+不过 [acgrid](https://github.com/acgrid) 本来提供一个编译好的 tb_userspace 可执行文件, 可以直接用
 
-   
+
 
 ## 配置
 
@@ -37,8 +36,12 @@ summary: 有些小型的OpenVZ VPS供应商不提供IPV6地址，可以用he.net
     ip -6 route del default dev venet0
 
 ## 将上述命令放在 /etc/rc.local
-   
-即可开机自动配置
+
+   即可开机自动配置
+
+如果是systemd的系统，需要启用
+
+    systemctl enable rc-local
 
 
 
