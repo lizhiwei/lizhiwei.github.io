@@ -44,7 +44,9 @@ summary: 有些小型的OpenVZ VPS供应商不提供IPV6地址，可以用he.net
     systemctl enable rc-local
 
 
+## Tunnel Broker 申请地址
 
 
+[HE.net IPv6 Tunnel Broker Registration](https://tunnelbroker.net/register.php)
 
 
