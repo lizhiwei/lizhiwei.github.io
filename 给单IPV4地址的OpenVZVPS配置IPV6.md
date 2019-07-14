@@ -27,13 +27,14 @@ summary: 有些小型的OpenVZ VPS供应商不提供IPV6地址，可以用he.net
 
 ## 配置
 
-    setsid ./tb_userspace tb HeServerIPv4Address MyClientIPv4Address sit > /dev/null
-    sleep 6
+    setsid ./tb_userspace tb HeServerIPv4Address MyClientIPv4Address sit > /dev/null 2>&1 &
+    sleep 5
     ip link set tb up                          # ifconfig tb up
     ip addr add MyClientIPv6Address dev tb     # ifconfig tb inet6 add MyClientIPv6Address
     ip link set dev tb mtu 1480                # ifconfig tb mtu 1480
+    ip -6 route del default dev venet0    
     ip route add ::/0 dev tb                   # route -A inet6 add ::/0 dev tb
-    ip -6 route del default dev venet0
+
 
 ## 将上述命令放在 /etc/rc.local
 

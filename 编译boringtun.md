@@ -19,6 +19,25 @@ summary: 准备rust编译环境，编译boringtun
 
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
+
+It will add the cargo, rustc, rustup and other commands to Cargo's bin 
+directory, located at:
+
+  ~/.cargo/bin
+
+This path will then be added to your PATH environment variable by modifying the
+profile file located at:
+
+  /~.profile
+
+Current installation options:
+
+   default host triple: x86_64-unknown-linux-gnu
+     default toolchain: stable
+  modify PATH variable: yes
+
+
+
 ## 准备borinttun源代码
 
     git clone  https://github.com/cloudflare/boringtun.git
@@ -54,7 +73,10 @@ summary: 准备rust编译环境，编译boringtun
 
 ## 编译boringtun
 
+    source $HOME/.cargo/env
     cargo build --bin boringtun --release --target x86_64-unknown-linux-gnu
+
+ 在  target/x86_64-unknown-linux-gnu/release 目录下可得到一个 boringtun的 可执行文件
 
 
 ## 测试
