@@ -84,7 +84,7 @@ https://github.com/NVISO-BE/MagiskTrustUserCerts
 #### 证书安装好后，可以在　设置->系统安全->加密与凭据->信任的凭据　里查看到
 
 
-![system cert](/img/201909/SysCert.png "红米6A导入mitmproxy证书后")
+![system cert](/blog/img/201909/SysCert.png "红米6A导入mitmproxy证书后")
 
 
 
