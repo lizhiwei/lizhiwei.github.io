@@ -26,12 +26,14 @@ summary: 介绍mitmproxy证书的安装
 　需要将自己的证书　添加到　cacert.bks里面
 
 ### 在Android 4.0 和 ６.0 之间
-　/system/etc/security 目录下的所有证书文件都会被信任
+
+/system/etc/security 目录下的所有证书文件都会被信任
 
 但是，用户可以添加自己的用户证书到　/data/misc/keychain/certs-added 目录
 
 ### 在Android 7.0之后
-     默认情况下，不再信任用户证书．但是应用自己可以在AndroidManifeset.xml里配置可以信息用户证书
+
+默认情况下，不再信任用户证书．但是应用自己可以在AndroidManifeset.xml里配置可以信息用户证书
 
 
 
@@ -58,19 +60,31 @@ summary: 介绍mitmproxy证书的安装
 
 #### 将证书放入　/system/etc/security/cacerts/
 
-　　　adb shell
-      su 
-      mount -o remount,rw /system
-      setenforce 0
-      mv c8750f0d.0 /system/etc/security/cacerts/ 
-      chmod 644 /system/etc/security/cacerts/c8750f0d.0
-      setenforce 1
-      mount -o remount,ro /system
+
+    adb shell
+    su 
+    mount -o remount,rw /system
+    setenforce 0
+    mv c8750f0d.0 /system/etc/security/cacerts/ 
+    chmod 644 /system/etc/security/cacerts/c8750f0d.0
+    setenforce 1
+    mount -o remount,ro /system
 
 #### 如果　system 分区只读，　可以考虑用magisk模块
 
 
 
+https://github.com/Magisk-Modules-Repo/movecert
+
+或者
+
+https://github.com/NVISO-BE/MagiskTrustUserCerts
+
+
+#### 证书安装好后，可以在　设置->系统安全->加密与凭据->信任的凭据　里查看到
+
+
+![system cert](/img/201909/SysCert.png "红米6A导入mitmproxy证书后")
 
 
 
