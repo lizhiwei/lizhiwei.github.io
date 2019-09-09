@@ -2,12 +2,12 @@
 author: lizhiwei
 head: 
 date: 2019-09-09
-title: Android 5.0之后反向usb网络共享
+title: mitmproxy透明模式分析reverse tethering手机流量
 tags: https,sniffer,mitm
 images: 
 category: network
 status: publish
-summary: 在Android 5.0之后引入了ip rule,使得路由规则更复杂，之间的reverse tethering方法需要进行修改
+summary: mitmproxy透明模式分析手机流量
 -->
 
 
