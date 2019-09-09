@@ -122,7 +122,13 @@ PC能通过局域网（有线或者无线), 通过USＢ线缆，将网络共享�
 
     ip route add 10.42.0.0/24 dev rndis0 table rmnet_data3
     ip route delete default table rmnet_data3
-　　ip route add default via 10.42.0.1 table rmnet_data3
+    ip route add default via 10.42.0.1 table rmnet_data3
+
+
+#### 删除ip v6的表　（选用)
+　　　防止走ipv6出去
+
+    ip -6 route  del default  table rmnet_data3
 
 
 
