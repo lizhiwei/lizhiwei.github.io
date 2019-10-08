@@ -33,22 +33,21 @@ dchpv6和ra(Router Advertisement)配置,保持不变,均为'server'
         ...
         # Uncomment this line to disable ipv6 rules
         option disable_ipv6     1
+....
 
+    config zone                           
+            option name             wan   
+            list   network          'lte' 
+            option input            REJECT
+            option output           ACCEPT
+            option forward          REJECT
+            option masq             1     
+            option mtu_fix          1     
+                                          
+    config forwarding                     
+            option src              lan
+            option dest             wan
 
-config zone                           
-        option name             wan   
-        list   network          'lte' 
-        option input            REJECT
-        option output           ACCEPT
-        option forward          REJECT
-        option masq             1     
-        option mtu_fix          1     
-                                      
-config forwarding                     
-        option src              lan
-        option dest             wan
-        
-        
         
 关闭IPV6防火墙，否则本机的一些端口无法暴露到公网
 
@@ -60,14 +59,13 @@ config forwarding
     #   option ula_prefix 'fdca:59d7:4008::/48'
 
 
-config interface 'lte'           
-        option pdptype 'ipv4v6'  
-        option device '/dev/cdc-wdm0'
-        option proto 'qmi'           
-        option dhcpv6 '1'
+    config interface 'lte'           
+            option pdptype 'ipv4v6'  
+            option device '/dev/cdc-wdm0'
+            option proto 'qmi'           
+            option dhcpv6 '1'
 
-        
-    
+
 
 
 
