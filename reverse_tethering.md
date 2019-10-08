@@ -152,38 +152,29 @@ PC能通过局域网（有线或者无线), 通过USＢ线缆，将网络共享�
 
 
 ###  在手机上检测
-　　　
-　   ping 10.42.0.1
-    PING 10.42.0.1 (10.42.0.1) 56(84) bytes of data.
+
+
+    ping 10.42.0.1
+    PING 10.42.0.1 (10.42.0.1) 56(84) bytes of data.    
     64 bytes from 10.42.0.1: icmp_seq=1 ttl=64 time=0.985 ms
 
-　　ping www.baidu.com
-    
+
+
 ### 设置DNS
 
-
-    ndc resolver setnetdns rmnet_data3 114.114.114.114 114.114.115.115
-[Android手机上如何修改移动数据网络3G4G5G的DNS](Android手机上如何修改移动数据网络3G4G5G的DNS.html)
-
-
+     ndc resolver setnetdns rmnet_data3 114.114.114.114 114.114.115.115
      ndc resolver setnetdns "" 8.8.4.4 8.8.8.8
 
-iptables -t nat -A OUTPUT -p udp -d 218.104.111.114  --dport 53 -j DNAT --to 114.114.114.114:53
-   (这个绝对有效）
+   
+[Android手机上如何修改移动数据网络3G4G5G的DNS](Android手机上如何修改移动数据网络3G4G5G的DNS.html)
+
+实践证明，用上文中提到的iptables是绝对有效的
 
 
 
 ### 查看tethering
 
     ndc tether status
-    返回：　　210 0 Tethering services started
-
- 　　ndc tether interface list
-    返回
-    　　
-
-　　　ndc tether dns list
-
-
-
+　　ndc tether interface list
+　　ndc tether dns list
 
