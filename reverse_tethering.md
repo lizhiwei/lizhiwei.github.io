@@ -172,9 +172,9 @@ PC能通过局域网（有线或者无线), 通过USＢ线缆，将网络共享�
 
 
 
-### 查看tethering
+### 查看tethering信息
 
     ndc tether status
-　　ndc tether interface list
-　　ndc tether dns list
+    ndc tether interface list
+    ndc tether dns list
 
