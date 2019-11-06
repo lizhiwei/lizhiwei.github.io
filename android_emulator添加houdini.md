@@ -49,4 +49,15 @@ libhoudini.so 　放到　/system/lib 目录下
     cp /system/etc/binfmt_misc/arm_dyn /proc/sys/fs/binfmt_misc/register
 
 
+## Android Pie
+
+platform/system/core/rootdir/etc/ld.config.txt 中添加
+
+    namespace.default.permitted.paths += /system/${LIB}/arm
+    namespace.default.permitted.paths += /system/${LIB}/arm/nb
+
+在Android 10之后，这个文件用　　https://android.googlesource.com/platform/system/linkerconfig　编译出的　可执行文件　来动态生成
+
+
+
 
