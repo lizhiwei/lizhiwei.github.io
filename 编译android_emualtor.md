@@ -24,6 +24,9 @@ summary: 编译android emulaotr
 SDK 29 对应的　emu-29.0
 
 
+ 最新代码在　　emu-master-dev　分支
+ 
+
 ## 编译
 
     rebuild.sh --clean=0

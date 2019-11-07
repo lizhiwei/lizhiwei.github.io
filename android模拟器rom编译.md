@@ -14,14 +14,12 @@ summary: 给android模拟器器编译ROM
 
 ##　在Debian 上准备一些依赖的包
 
-    apt install git  build-essential g++-multilib  gcc-multilib autoconf automake libtool flex bison gdb   libncurses5  zip
+    apt install git  build-essential g++-multilib  gcc-multilib autoconf automake libtool flex bison gdb   libncurses5  zip  libxml2-utils curl
 
 在Debian 10(buster) Debian 11 (bullseys)上都是这些
 　　注意是　libncurses5 而不是系统中已经安装好的　libncurses6
 
-可能还需要
-
-    　libxml2-utils　zip curl
+    　
 
 ## 准备repo脚本
 
