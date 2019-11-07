@@ -1,7 +1,7 @@
 <!--
 author: lizhiwei
 head: 
-date: 2019-10-19
+date: 2019-11-2
 title: Android NDC命令
 tags: Android
 images: 
@@ -46,12 +46,13 @@ summary: ndroid NDC命令
 
 ###  ndc netd network route add
 
-
+...
 
 ### ndc nat enable tun0 wlan0 1  
 
+...
 
+### 如何将VPN共享给wifi热点
 
-如何将VPN共享给wifi热点
-
+...
 

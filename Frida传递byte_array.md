@@ -1,7 +1,7 @@
 <!--
 author: lizhiwei
 head: 
-date: 2019-10-19
+date: 2019-11-2
 title: frida如何从js传递byte array到java或者native
 tags: frida
 images: 
