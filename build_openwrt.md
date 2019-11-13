@@ -2,12 +2,12 @@
 author: lizhiwei
 head: 
 date: 2019-11-11
-title: OpenWRT中配置IPV6
+title: 编译OpenWRT
 tags: IPv6
 images: 
 category: network
 status: publish
-summary: 在OpenWRT中配置如何从中国移动光纤宽带中获取IPv6地址
+summary: 编译OpenWRT
 -->
 
 
