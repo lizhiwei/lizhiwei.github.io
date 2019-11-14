@@ -118,7 +118,53 @@ ssl为了简单，也可以不验证
 参考 https://trojan-gfw.github.io/trojan/config
 
 
+## 证书的获取
 
+上面服务器用到的证书，可以 [用acme.sh来获取Let's Encrypt免费SSL证书](acme.sh来获取ssl证书.html)
+
+
+## nginx原有配置改造
+
+/etc/nginx/sites-enable/zhiwei
+
+        listen 80;
+改成
+        listen 127.0.0.1:80 default_server;
+
+
+然后添加一个新站点
+
+       server {
+               listen 80;
+               listen [::]:80;
+               server_name _;
+               return 301 https://$host$request_uri;
+       }
+
+
+如果原站点为ssl站
+
+        listen   1.1.1.1:443 ssl;
+        listen [2605:1:2:3::9]:443 ssl;
+
+        ssl_certificate /home/zhiwei/ssl/zhiwei.li.cer;
+        ssl_certificate_key /home/zhiwei/ssl/zhiwei.li.key;
+
+要改为 80 站点
+       
+
+
+## 测试并启动trojan
+
+       trojan -c /etc/trojan/config.json -t
+       systemctl restart trojan
+
+
+
+
+
+
+       
 
     
 
