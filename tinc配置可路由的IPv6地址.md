@@ -253,9 +253,10 @@ Linode给你/64网段的方法，是在他们的路由表里面，把所有到�
 而Vultr的IPv6，上来就给你的是一个/64的网段，你在Vultr的主机本身也只是监听Router Advertisement来自动配置IPv6地址而已。
 Vultr那边，不会帮你把到那个地址的所有包全都自动路由到你的主机，而是你得自己去响应Vultr的路由器的IPv6 Neighbor Discovery这种东西，让Vultr知道你的存在，他的路由器才会理你。
 
-所以， vultr 的 vps 需要开启  proxy_ndp 
+所以，
 
- 而 linode 不需要
+        vultr 的 vps(以及其他KVM类型VPS) 需要开启  proxy_ndp 
+        而 linode 不需要
 
 
 
