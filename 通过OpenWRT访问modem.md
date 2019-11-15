@@ -57,14 +57,17 @@ summary: 通过OpenWRT直接访问modem的管理界面
 另外一种方法，就是
 ## 命令行配置
 
-ifconfig  eth0.2:1  add 192.168.1.99 
 
-iptables -t nat -I postrouting_rule -s 192.168.0.0/24 -d 192.168.1.1 -j SNAT --to 192.168.1.99
-iptables -I zone_lan_forward -s 192.168.0.0/24 -d 192.168.1.1 -j ACCEPT
-
+       ifconfig  eth0.2:1  add 192.168.1.99 
+       
+       iptables -t nat -I postrouting_rule -s 192.168.0.0/24 -d 192.168.1.1 -j SNAT --to 192.168.1.99
+       iptables -I zone_lan_forward -s 192.168.0.0/24 -d 192.168.1.1 -j ACCEPT
+       
 
 上面的命令适用于
+
 OpenWRT 局域网段  192.168.0.*
+
 modem的IP 192.168.1.1
 
 
