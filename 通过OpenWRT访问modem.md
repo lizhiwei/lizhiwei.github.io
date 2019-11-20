@@ -61,7 +61,7 @@ summary: 通过OpenWRT直接访问modem的管理界面
        ifconfig  eth0.2:1  add 192.168.1.99 
        
        iptables -t nat -I postrouting_rule -s 192.168.0.0/24 -d 192.168.1.1 -j SNAT --to 192.168.1.99
-       iptables -I zone_lan_forward -s 192.168.0.0/24 -d 192.168.1.1 -j ACCEPT
+       iptables -I forwarding_lan_rule -s 192.168.0.0/24 -d 192.168.1.1 -j ACCEPT
        
 
 上面的命令适用于
