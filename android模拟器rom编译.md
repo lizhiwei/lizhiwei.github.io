@@ -35,6 +35,13 @@ summary: 给android模拟器器编译ROM
     cd AOSP
     repo sync
 
+## 切换版本（可选）
+   如果想编译其他分支的源代码， 在执行 repo sync 命令前需要进行切换
+
+
+       repo init -b android-9.0.0_r50
+
+
 ## 清理
 
     make clobber
