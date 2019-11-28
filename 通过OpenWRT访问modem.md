@@ -29,29 +29,13 @@ summary: 通过OpenWRT直接访问modem的管理界面
 
        config zone
               	option name		wan
-              	list   network		'wan'
-               #list   network	'wan6'
+              	list   network	'wan'
+              	list   network	'modem'
               	option input		REJECT
               	option output		ACCEPT
-              	option forward		REJECT
+              	option forward	REJECT
               	option masq		1
-              	option masq_dest        '!modem'
-              	option mtu_fix		1
-
-
-添加一个选项 masq_dest , 值为  !modem
-
-
-或者修改firewall配置
-
-
-       uci set firewall.@zone[1].network='wan modem'
-       uci commit firewall
-       fw reload
-
-
-
-
+              	option mtu_fix	1
 
 
 另外一种方法，就是
