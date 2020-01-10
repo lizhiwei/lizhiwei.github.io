@@ -133,11 +133,21 @@ pm create-user --profileOf  0  --managed
 
 最终到  createUserInternalUnchecked
 
-hook住  canAddMoreManagedProfiles  和  getNextAvailableId
+
+hook住  **canAddMoreManagedProfiles ** 和  **getNextAvailableId**
 
 
 createProfileForUser 传递 disallowedPackages
 
+
+
+       adb shell pm create-user --profileOf 0 --managed profile1
+       adb shell pm create-user --profileOf 0 --managed profile2
+
+
+
+
+setprop fw.max_users 10
 
 
 
@@ -200,11 +210,152 @@ createProfileForUser 传递 disallowedPackages
   FLAG_INITIALIZED = 0x10  (创建时带标志，不会初始化一些包)
   
   
+联想魔改了 android.content.pm.UserInfo, 所以它用的createuser创建的分身，而不是creatUserProfile
+
+
+    public boolean isSecuritySpace() {
+        return (this.flags & 0x80001000) == 0x80001000;
+    }
+
+    public boolean isMultipleSpace(boolean excludeSecurity) {
+        return (this.flags & 0x80000800) == 0x80000800 || (!excludeSecurity && (this.flags & 0x80001000) == 0x80001000);
+    }
+    
+    public boolean isMultipleSpace() {
+        return isMultipleSpace(false);
+    }
 
 
 然后
 startUserInBackground
 installBasicApp
+
+#### 联想对switchUser的魔改
+com.android.server.am.UserController
+
+    public boolean switchUser(int targetUserId) {
+        enforceShellRestriction("no_debugging_features", targetUserId);
+        int currentUserId = getCurrentUserId();
+        UserInfo targetUserInfo = getUserInfo(targetUserId);
+        if (targetUserId == currentUserId) {
+            Slog.i(TAG, "user #" + targetUserId + " is already the current user");
+            return true;
+        } else if (targetUserInfo == null) {
+            Slog.w(TAG, "No user info for user #" + targetUserId);
+            return false;
+        } else if (!targetUserInfo.supportsSwitchTo()) {
+            Slog.w(TAG, "Cannot switch to User #" + targetUserId + ": not supported");
+            return false;
+        } else if (targetUserInfo.isManagedProfile() || (UserHandle.supportsMultiSpace() && targetUserInfo.isMultipleSpace())) {
+            Slog.w(TAG, "Cannot switch to User #" + targetUserId + ": not a full user");
+            return false;
+        } else {
+            synchronized (this.mLock) {
+                this.mTargetUserId = targetUserId;
+            }
+            if (this.mUserSwitchUiEnabled) {
+                Pair<UserInfo, UserInfo> userNames = new Pair<>(getUserInfo(currentUserId), targetUserInfo);
+                this.mUiHandler.removeMessages(1000);
+                this.mUiHandler.sendMessage(this.mHandler.obtainMessage(1000, userNames));
+            } else {
+                this.mHandler.removeMessages(START_USER_SWITCH_FG_MSG);
+                this.mHandler.sendMessage(this.mHandler.obtainMessage(START_USER_SWITCH_FG_MSG, targetUserId, 0));
+            }
+            return true;
+        }
+
+
+## 小米的修改
+
+com.miui.xspace.XSpaceCompat
+
+       createProfileForUser(profileName, 0x800040, Process.myUserHandle().getIdentifier());
+
+...
+
+也在com.android.server.pm.UserManagerService 中  对 createUserInternalUnchecked 进行了改造
+
+if(is_xiaomi_dual != 0 && !v1.canAddMoreManagedProfiles(parentUserId, false) && (0x800000 & myflags) == 0) {
+                Log.e("UserManagerService", "Cannot add more managed profiles for user " + parentUserId);
+                __monitor_exit(v14);
+                goto label_75;
+            }
+
+
+android.content.pm.UserInfo
+
+public static final int FLAG_DISABLED = 0x40;
+public static final int FLAG_AIR_SPACE = 0x400000;
+public static final int FLAG_XSPACE_PROFILE = 0x800000;
+
+public boolean isAirSpace() {
+        return (this.flags & 0x400000) == 0x400000;
+}
+
+public boolean isManagedProfile() {
+     return (this.flags & 0x20) == 0x20 ;
+}
+
+public boolean isEnabled() {    //用来防止切换成前台用户
+     return (this.flags & 0x40) != 0x40;
+}
+
+
+
+## 跟踪不需要安装的包
+
+com/android/server/pm/PackageManagerService.java
+
+    /** Called by UserManagerService */
+    void createNewUser(int userId, String[] disallowedPackages) {
+        synchronized (mInstallLock) {
+            mSettings.createNewUserLI(this, mInstaller, userId, disallowedPackages);
+        }
+        synchronized (mPackages) {
+            scheduleWritePackageRestrictionsLocked(userId);
+            scheduleWritePackageListLocked(userId);
+            applyFactoryDefaultBrowserLPw(userId);
+            primeDomainVerificationsLPw(userId);
+        }
+    }
+
+
+com.android.server.pm.Settings
+
+void createNewUserLI(@NonNull PackageManagerService service, @NonNull Installer installer,
+            int userHandle, String[] disallowedPackages)
+
+
+                final boolean shouldInstall = ps.isSystem() &&
+                        !ArrayUtils.contains(disallowedPackages, ps.name);
+                // Only system apps are initially installed.
+                ps.setInstalled(shouldInstall, userHandle);
+                if (!shouldInstall) {
+                    writeKernelMappingLPr(ps);
+                }
+
+       只有系统应用，并且在 disallowedPackages 列表的，才可以安装
+
+
+## 小米必须安装
+
+android   （/system/framework/framework-res.apk）
+com.android.providers.settings  （/system/priv-app/SettingsProvider/SettingsProvider.apk）
+com.google.android.webview   （/system/app/WebViewGoogle/WebViewGoogle.apk）
+
+
+
+## 联想必须装
+
+com.google.android.webview
+com.lenovo.lsf
+
+## 一加必须装
+
+android   （/system/framework/framework-res.apk）
+com.android.providers.settings  （/system/priv-app/OPSettingsProvider/OPSettingsProvider.apk）
+com.google.android.webview       （/system/app/GoogleWebView/GoogleWebView.apk）
+
 
 
 
