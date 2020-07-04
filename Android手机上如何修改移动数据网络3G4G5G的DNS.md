@@ -39,12 +39,20 @@ summary: Android早期版本可以改属性
 
 在Android手机上，自己拦截
 
-    iptables -t nat -A OUTPUT -p udp -d 218.104.111.122  --dport ５３ -j DNAT --to 114.114.114.114:53
+    iptables -t nat -A OUTPUT -p udp -d 218.104.111.122  --dport 53 -j DNAT --to 114.114.114.114:53
+
+
 
 在手机上无差别的拦截(udp和tcp)
 
     iptables　-t nat -A OUTPUT -p udp --dport 53 -j DNAT　--to 114.114.114.114:53
     iptables　-t nat -A OUTPUT -p tcp --dport 53 -j DNAT　--to 114.114.114.114:53
+
+
+在 Android 10 手机上，还需要删除
+
+       iptables -t nat -D OUTPUT -j sla_wlan_dns_dnat
+       iptables -t nat -D OUTPUT -j sla_lte_dns_dnat
 
 
 
