@@ -60,6 +60,12 @@ summary: WireGuard是一个在Linux内核中实现的VPN软件，简单快速，
     iptables -t nat -A POSTROUTING -o venet0 -j MASQUERADE
     才可以
 
+注意，OpenVZ7 7中（一般用 4.9.0 Linux内核), 需要使用
+
+       iptables-legacy -t nat -A POSTROUTING -s 10.0.0.0/24 -o venet0    -j SNAT --to-source  1.2.3.4
+
+也就是用 iptables-legacy 来代替  iptables
+
 ## 启动 boringtun
 
      # boringtun --disable-drop-privileges  --disable-multi-queue  --foreground  wg
