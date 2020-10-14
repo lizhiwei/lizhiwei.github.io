@@ -12,8 +12,6 @@ summary: Java智能卡applet开发
 
 
 
-##　Applet开发
-
 每个Java卡的Applet都继承自 javacard.framework.Applet类，Applet类为抽象类，也就是
 只定义了Applet执行过程中所需要的方法，而没有具体实现。
 
@@ -85,12 +83,13 @@ Applet install成功结束后，该Applet被JCRE将如到注册表中，并标�
 install()中定义的bArray数组为全局数组， 可以被任意的Applet所访问。
 
 该数组为LV结构，格式如下：
-bArray[0]      =  Applet实例的AID长度
-bArray[1:Li]   =  Applet实例的AID
-bArray[Li+1]          =  Applet控制信息的长度
-bArray[Li+2:Li+Lc+1]  = Applet控制信息
-bArray[Li+Lc+2]            = Applet Install方法参数的个数
-bArray[Li+Lc+3:Li+Lc+La+1] = Applet Install方法输入参数
+
+       bArray[0]      =  Applet实例的AID长度
+       bArray[1:Li]   =  Applet实例的AID
+       bArray[Li+1]          =  Applet控制信息的长度
+       bArray[Li+2:Li+Lc+1]  = Applet控制信息
+       bArray[Li+Lc+2]            = Applet Install方法参数的个数
+       bArray[Li+Lc+3:Li+Lc+La+1] = Applet Install方法输入参数
 
 以上的LV格式中， Li, Lc, La都可能为0
 如果应用需要保存bArray[]中的数据，将该数据复制到自身Applet实例中即可， 但bArray[]数组作为全局数组，该数组的引用，不能被存储到类变量或者对象实例中。
@@ -100,8 +99,8 @@ bArray[Li+Lc+3:Li+Lc+La+1] = Applet Install方法输入参数
 
   提供了两个register方法
 
-  protected final void register() throws SystemException
-  pretected final void register(byte[] bArray, short bOffset, byte bLength) throws SystemException
+       protected final void register() throws SystemException
+       pretected final void register(byte[] bArray, short bOffset, byte bLength) throws SystemException
 
 前者 使用 Applet的Class AID作为Applet的Instance AID, 注册到 JCRE.
    Class AID 是 Applet的class文件 转换为  cap文件时，由用户指定。
@@ -114,7 +113,7 @@ bOffset为AID在数组中的偏移， bLength为AID数据的长度
 
 ### select()方法
 
-    在Applet被选中之前，一直处于挂起(suspend)，当JCRE收到一个SELECT命令， 且该SELECT命令的数据段，和某个Applet实例化AID一致
+在Applet被选中之前，一直处于挂起(suspend)，当JCRE收到一个SELECT命令， 且该SELECT命令的数据段，和某个Applet实例化AID一致
 该应用将被选中， JCRE将会调用Applet的select方法。当 Manage Channel Open命令调用时， 在该通道上激活的Applet的select方法，也会被调用。
 
 
@@ -147,30 +146,7 @@ process()执行过程中，Applet会主动抛出ISOException，该异常会JCRE�
    在一个新的Applet被选中之前， JCRE将调用 Applet.deselect方法 或者 MultiSelect.deselect来取消选择。有时候，将要选择的应用
    同当前已选应用是同一个应用， JCRE仍然abuilding先 取消选择，再重新选择它。
 
-同select()方法一样，如果要Applet被取消的时候，做一些清空操作，就需要重写des
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 编译
-
+   Applet被取消的时候，做一些清空操作，就需要重写deselect方法。
 
 
 

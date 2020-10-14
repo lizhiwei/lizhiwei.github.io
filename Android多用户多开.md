@@ -356,7 +356,9 @@ android   （/system/framework/framework-res.apk）
 com.android.providers.settings  （/system/priv-app/OPSettingsProvider/OPSettingsProvider.apk）
 com.google.android.webview       （/system/app/GoogleWebView/GoogleWebView.apk）
 
-
-
+在Android 10之后，还需要
+com.android.providers.userdictionary  （/system/priv-app/UserDictionaryProvider/UserDictionaryProvider.apk）
+否则输入发不能使用
+com.android.permissioncontroller
 
 

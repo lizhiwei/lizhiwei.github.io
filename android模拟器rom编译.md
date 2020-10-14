@@ -17,6 +17,7 @@ summary: 给android模拟器器编译ROM
     apt install git  build-essential g++-multilib  gcc-multilib autoconf automake libtool flex bison gdb   libncurses5  zip  libxml2-utils curl
 
 在Debian 10(buster) Debian 11 (bullseys)上都是这些
+
 　　注意是　libncurses5 而不是系统中已经安装好的　libncurses6
 
     　
@@ -32,8 +33,9 @@ summary: 给android模拟器器编译ROM
 
     wget -c https://mirrors.tuna.tsinghua.edu.cn/aosp-monthly/aosp-latest.tar
     tar xf aosp-latest.tar
-    cd AOSP
-    repo sync
+    cd aosp
+    repo sync  (或者 repo sync -c -j8）
+
 
 ## 切换版本（可选）
    如果想编译其他分支的源代码， 在执行 repo sync 命令前需要进行切换
@@ -41,14 +43,16 @@ summary: 给android模拟器器编译ROM
 
        repo init -b android-9.0.0_r50
 
+如果指定 tinghua的源，请用
 
-## 清理
+    repo init -u https://aosp.tuna.tsinghua.edu.cn/platform/manifest  -b   android-11.0.0_r5
 
-    make clobber
+
 
 ## 准备编译环境，配置编译类型
 
     . build/envsetup.sh
+    make clobber  （清理)
     lunch sdk_phone_x86_64-userdebug
 
 ##  编译
